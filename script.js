@@ -124,4 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
             planet.style.animationPlayState = 'running';
         });
     });
+
+    // Intersection Observer for Event Card Reveal
+    const eventCards = document.querySelectorAll('.event-card');
+    const eventObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    eventCards.forEach(card => {
+        eventObserver.observe(card);
+    });
 });
