@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Blog Post</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="blog.css">
+    <style>
+/* sublog.css */
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+
+header.blog-header {
+  background-color: #003366;
+  color: white;
+  padding: 1rem 0;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header.blog-header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+header.blog-header h1.blog-title {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+header.blog-header a.back-button {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+header.blog-header a.back-button:hover {
+  background-color: white;
+  color: #003366;
+}
+
+section.form-section {
+  background-color: white;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 95%;
+  text-align: center;
+}
+
+section.form-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #003366;
+}
+
+form#blogSubmissionForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+form#blogSubmissionForm .input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+form#blogSubmissionForm .input-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #003366;
+  font-size: 1rem;
+}
+
+form#blogSubmissionForm .input-group input,
+form#blogSubmissionForm .input-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: calc(100% - 20px);
+  /* max-width: 100%; */
+  transition: border-color 0.3s ease;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+form#blogSubmissionForm .input-group input:focus,
+form#blogSubmissionForm .input-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+form#blogSubmissionForm .input-group textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+form#blogSubmissionForm button[type="submit"] {
+  padding: 0.75rem 2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0.5rem;
+}
+
+form#blogSubmissionForm button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+#submissionMessage {
+  margin-top: 1rem;
+  color: #28a745;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  section.form-section {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  form#blogSubmissionForm .input-group input,
+  form#blogSubmissionForm .input-group textarea {
+    width: calc(100% - 12px);
+  }
+}
+
+    </style>
+     <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+          apiKey: "AIzaSyDgMeICQdeMF_TwDvjfIFHlD6rpHA_My3c",
+          authDomain: "blogdb-b7ab6.firebaseapp.com",
+          databaseURL: "YOUR_DATABASE_URL.firebaseio.com", // If using Realtime Database
+          projectId: "blogdb-b7ab6",
+          storageBucket: "blogdb-b7ab6.firebasestorage.app",
+          messagingSenderId: "916316008447",
+          appId: "1:916316008447:web:d551af696de9293f3941ca",
+          measurementId: "G-W8KSCZR2MC"
+        };
+    </script>
+</head>
+<body>
+    <header class="blog-header">
+        <div class="header-content">
+            <h1 class="blog-title">EMBS Gold <span style="font-size:17px;"></span></h1>
+            <a href="blog.html" class="back-button">Back to Blog</a>
+        </div>
+    </header>
+    <section class="form-section">
+        <div class="form-container">
+            <h2>Submit Your Blog Post</h2>
+            <form id="blogSubmissionForm">
+                <div class="input-group">
+                    <label for="blogTitle">Title:</label><br>
+                    <input type="text" id="blogTitle" name="title" placeholder="Enter your blog title">
+                </div>
+                <div class="input-group">
+                    <label for="blogContent">Content:</label><br>
+                    <textarea id="blogContent" name="content" placeholder="Write your blog content here..."></textarea>
+                </div>
+                <button type="submit" id="submitBlog">Submit for Moderation</button>
+            </form>
+            <div id="submissionMessage"></div>
+        </div>
+    </section>
+
+
+    <script src="sublog.js"></script>
+</body>
+</html>

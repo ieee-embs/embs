@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <section class="register-section">
+        <div class="logo-container">
+            <img src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="Club Logo" class="club-logo">
+        </div>
+        <div class="form-container">
+            <h2>Register</h2>
+            <form id="registrationForm">
+                <div class="input-group">
+                    <label for="registerEmail"><b>Email :</b></label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="registerEmail" name="email" placeholder="Enter your Email">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="registerPassword"><b>Password :</b></label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="registerPassword" name="password" placeholder="Enter your Password">
+                        <span class="toggle-password">👁️</span>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit" id="registerSubmit">Register</button>
+            </form>
+            <div id="registrationMessage"></div>
+            <div class="signup-link">
+                <p>Don't have an account? <a href="#">Sign Up</a></p>
+            </div>
+            
+        </div>
+    </section>
+    <script src="register.js"></script>
+</body>
+</html>
