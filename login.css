@@ -1,0 +1,206 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #d4d4d4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Dot Pattern Background */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 15px 15px;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+/* Auth Container */
+.auth-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Logo Container */
+.logo-container {
+    margin-bottom: 1.5rem;
+}
+
+.club-logo {
+    max-width: 80px;
+    height: auto;
+}
+
+/* Form Container */
+.form-container {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Title */
+.form-container h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: #555555;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333333;
+    transition: border-color 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.input-wrapper input::placeholder {
+    color: #999999;
+}
+
+/* Password Toggle */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #666666;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Auth Button */
+.auth-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+}
+
+.auth-button:hover {
+    background: #0056b3;
+}
+
+.auth-button:active {
+    transform: scale(0.98);
+}
+
+/* Form Messages */
+#registrationMessage, #loginMessage {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #555555;
+    text-align: center;
+}
+
+/* Switch Link */
+.switch-link {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #555555;
+    text-align: center;
+}
+
+.switch-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+/* Back Link */
+.back-link {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 1rem;
+    }
+
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .form-container h2 {
+        font-size: 1.25rem;
+    }
+
+    .input-group label,
+    .input-wrapper input,
+    .auth-button,
+    .switch-link,
+    .back-link {
+        font-size: 0.85rem;
+    }
+
+    .club-logo {
+        max-width: 60px;
+    }
+}

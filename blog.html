@@ -3,189 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Blog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <title>EMBS Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="blog.css">
-    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
-    <script>
-        const firebaseConfig = {
-          apiKey: "AIzaSyDgMeICQdeMF_TwDvjfIFHlD6rpHA_My3c",
-          authDomain: "blogdb-b7ab6.firebaseapp.com",
-          databaseURL: "YOUR_DATABASE_URL.firebaseio.com", // If using Realtime Database
-          projectId: "blogdb-b7ab6",
-          storageBucket: "blogdb-b7ab6.firebasestorage.app",
-          messagingSenderId: "916316008447",
-          appId: "1:916316008447:web:d551af696de9293f3941ca",
-          measurementId: "G-W8KSCZR2MC"
-        };
-        // blog.js
-  
-  // Initialize Firebase (this should come after the firebaseConfig in your HTML)
-  try {
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore(); // Initialize Cloud Firestore
-  } catch (error) {
-    console.error("Error initializing Firebase:", error);
-  }
-  
-  document.addEventListener('DOMContentLoaded', () => {
-      const blogPostsContainer = document.getElementById('blogPostsContainer');
-  
-      if (blogPostsContainer) {
-          function displayApprovedBlogs() {
-              db.collection('blogs')
-                  .where('status', '==', 'approved')
-                  .orderBy('submissionDate', 'desc')
-                  .get()
-                  .then((querySnapshot) => {
-                      blogPostsContainer.innerHTML = ''; // Clear previous posts
-                      querySnapshot.forEach((doc) => {
-                          const blogData = doc.data();
-                          const submissionDate = blogData.submissionDate ? blogData.submissionDate.toDate() : null;
-                          const blogPostDiv = document.createElement('article');
-                          blogPostDiv.classList.add('blog-card'); // Add a CSS class for styling
-                          blogPostDiv.innerHTML = `
-                              <div class="blog-image" style="background-image: url('blog1.jpg');"></div>
-                              <div class="blog-content">
-                                  <h2 class="blog-post-title">${blogData.title}</h2>
-                                  <p class="blog-meta">Posted on: ${submissionDate ? submissionDate.toLocaleDateString() : 'N/A'}</p>
-                                  <p class="blog-excerpt">${blogData.content}</p>
-                                  <a href="#" class="read-more">Read More</a>
-                              </div>
-                          `;
-                          blogPostsContainer.appendChild(blogPostDiv);
-                      });
-                  })
-                  .catch((error) => {
-                      console.error("Error fetching approved blogs:", error);
-                  });
-          }
-  
-          displayApprovedBlogs();
-      }
-  });
-      </script>
-  
 </head>
 <body>
+    <div class="spline-background"></div>
+
     <header class="blog-header">
         <div class="header-content">
-            <h1 class="blog-title">EMBS Gold <span style="font-size:17px;"></span></h1>
-            <a href="index.html" class="back-button">Back to Club</a>
+            <h1 class="blog-title">EMBS Pixels</h1>
+            <nav class="navbar">
+                <ul class="nav-links">
+                    
+                </ul>
+            </nav>
+            <a href="submit-blog.html" class="cta-button">Submit Your Blogs</a>
         </div>
     </header>
+
     <section class="hero-section">
+        <div class="dynamic-background">
+            <!-- Particles -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+
+            <!-- Sun -->
+            <div class="sun"></div>
+
+            <!-- Orbits with Planets -->
+            <div class="orbit orbit-1">
+                <div class="planet planet-1"></div>
+            </div>
+            <div class="orbit orbit-2">
+                <div class="planet planet-2"></div>
+            </div>
+            <div class="orbit orbit-3">
+                <div class="planet planet-3"></div>
+            </div>
+            <div class="orbit orbit-4">
+                <div class="planet planet-4"></div>
+            </div>
+        </div>
         <div class="hero-content">
-            <h1 class="hero-title">Discover Our Stories</h1>
-            <p class="hero-tagline">Dive into the latest insights, updates, and innovations from our club community.</p>
-            <div class="hero-buttons">
-                <a href="#blog-posts" class="hero-button read-blogs">Read Blogs</a>
-                <button class="hero-button submit-blog" id="openRegisterModal">Submit Your Blog</button>
-            </div>
-        </div>
-    </section>
-    <section class="blog-section" id="blog-posts">
-        <div id="blogPostsContainer">
-            <article class="blog-card">
-                <div class="blog-image" style="background-image: url('blog1.jpg');"></div>
-                <div class="blog-content">
-                    <h2 class="blog-post-title">Exploring AI in Healthcare</h2>
-                    <p class="blog-meta">May 1, 2025 • Emily Davis</p>
-                    <p class="blog-excerpt">Discover how AI is transforming healthcare with cutting-edge solutions for better patient outcomes.</p>
-                    <a href="#" class="read-more">Read More</a>
-                </div>
-            </article>
-            <article class="blog-card">
-                <div class="blog-image" style="background-image: url('blog2.jpg');"></div>
-                <div class="blog-content">
-                    <h2 class="blog-post-title">The Future of Wearable Tech</h2>
-                    <p class="blog-meta">April 28, 2025 • Michael Lee</p>
-                    <p class="blog-excerpt">A look into the next generation of wearable technology and its impact on daily life.</p>
-                    <a href="#" class="read-more">Read More</a>
-                </div>
-            </article>
-            <article class="blog-card">
-                <div class="blog-image" style="background-image: url('blog3.jpg');"></div>
-                <div class="blog-content">
-                    <h2 class="blog-post-title">Sustainable Tech Innovations</h2>
-                    <p class="blog-meta">April 20, 2025 • Sophia Wilson</p>
-                    <p class="blog-excerpt">Explore the latest sustainable tech innovations shaping a greener future.</p>
-                    <a href="#" class="read-more">Read More</a>
-                </div>
-            </article>
-            <article class="blog-card">
-                <div class="blog-image" style="background-image: url('blog4.jpg');"></div>
-                <div class="blog-content">
-                    <h2 class="blog-post-title">Tech Summit Recap</h2>
-                    <p class="blog-meta">April 15, 2025 • John Doe</p>
-                    <p class="blog-excerpt">Highlights from our recent Tech Summit, including key takeaways and moments.</p>
-                    <a href="#" class="read-more">Read More</a>
-                </div>
-            </article>
-        </div>
-        <div class="pagination">
-            <button class="page-button prev" disabled>Previous</button>
-            <span class="page-number">1</span>
-            <button class="page-button next">Next</button>
-        </div>
-    </section>
-
-    <!-- Registration Modal -->
-    <div class="modal" id="registerModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeRegisterModal">&times;</span>
-            <div class="logo-container">
-                <img src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="Club Logo" class="club-logo">
-            </div>
-            <div class="form-container">
-                <h2 style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-weight: bold;">Register Yourself!</h2>
-                <form id="registrationForm">
-                    <div class="input-group">
-                        <label for="registerEmail">Email:</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">📧</span>
-                            <input type="email" id="registerEmail" name="email" placeholder="YourMail@shemale.com">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label for="registerPassword">Password:</label>
-                        <div class="input-wrapper">
-                            <span class="input-icon">🔒</span>
-                            <input type="password" id="registerPassword" name="password" placeholder="Enter your Password">
-                            <span class="toggle-password">👁️</span>
-                        </div>
-                    </div>
-                    <div class="form-options">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="rememberMe" name="rememberMe">
-                            <label for="rememberMe">Remember me</label>
-                        </div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
-                    </div>
-                    <button type="submit" id="registerSubmit">Take me in!!</button>
-                </form>
-                <div id="registrationMessage"></div>
-                <div class="signup-link">
-                    <p>Already have an account? <a href="#"><b>Login</b></a></p>
-                </div>
-                
-            </div>
             
+            <h2 class="hero-title" style="font-size: 52px;">Your Articles,Our Platform.</h2>
+            <p class="hero-tagline" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-weight: bold;color: rgb(255, 255, 255);">An IEEE EMBS RIT Initiatve.</p>
+            <div class="hero-buttons">
+                <a href="#blog-section" class="hero-button read-blogs">Read Blogs</a>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
+    <section class="blog-section" id="blog-section">
+        <div class="blog-grid">
+            <!-- Sample Blog Card 1 -->
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60');"></div>
+                <div class="blog-content">
+                    <h3 class="blog-post-title">The Beauty of Nature</h3>
+                    <p class="blog-meta">By Jane Doe | May 1, 2025</p>
+                    <p class="blog-excerpt">Exploring the serene landscapes and the magic of the natural world in all its glory.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </div>
 
-<script src="blog.js"></script>
+            <!-- Sample Blog Card 2 -->
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60');"></div>
+                <div class="blog-content">
+                    <h3 class="blog-post-title">Tech Trends 2025</h3>
+                    <p class="blog-meta">By John Smith | May 2, 2025</p>
+                    <p class="blog-excerpt">A deep dive into the latest technology trends shaping our future.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </div>
+
+            <!-- Sample Blog Card 3 -->
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60');"></div>
+                <div class="blog-content">
+                    <h3 class="blog-post-title">Travel Diaries: The Beach Escape</h3>
+                    <p class="blog-meta">By Emily Brown | May 3, 2025</p>
+                    <p class="blog-excerpt">An unforgettable journey to the sun-kissed beaches of the tropics.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
-</html><section class="blog-section" id="blog-posts">
-    <div id="blogPostsContainer">
-        <!-- Blog posts will be dynamically inserted here -->
-    </div>
-</section><section class="blog-section" id="blog-posts">
-    <div id="blogPostsContainer">
-        <!-- Blog posts will be dynamically inserted here -->
-    </div>
-</section>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="register.css"> <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",  // Replace with your actual API key
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",  // Replace with your project ID
+        databaseURL: "YOUR_DATABASE_URL.firebaseio.com",  // Replace with your database URL
+        projectId: "YOUR_PROJECT_ID",  // Replace with your project ID
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",  // Replace with your storage bucket
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",  // Replace with your sender ID
+        appId: "YOUR_APP_ID",  // Replace with your app ID
+        measurementId: "YOUR_MEASUREMENT_ID" // Replace
+      };
+    </script>
+</head>
+<body>
+    <section class="register-section">
+        <div class="logo-container">
+            <img src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="Club Logo" class="club-logo">
+        </div>
+        <div class="form-container">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="input-group">
+                    <label for="adminEmail">Email:</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="adminEmail" name="email" placeholder="Enter your admin email">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="adminPassword">Password:</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="adminPassword" name="password" placeholder="Enter your admin password">
+                        <span class="toggle-password">👁️</span>
+                    </div>
+                </div>
+                <button type="submit" id="adminLoginSubmit">Login</button>
+            </form>
+            <div id="adminLoginMessage"></div>
+        </div>
+    </section>
+
+    <script src="admin_login.js"></script>
+</body>
+</html>

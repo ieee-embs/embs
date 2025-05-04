@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Detail - EMBS Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="blog-detail.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <header class="blog-header">
+        <div class="header-content">
+            <h1 class="blog-title">EMBS Blog</h1>
+            <div class="header-buttons">
+                <a href="blog.html" class="back-button">Back to Blogs</a>
+                <button id="logoutButton" style="display: none;" class="logout-button">Logout</button>
+            </div>
+        </div>
+    </header>
+    <section class="blog-detail-section">
+        <div class="blog-detail-container">
+            <div id="blogDetailContent">
+                <h1 id="blogTitle"></h1>
+                <p id="blogMeta"></p>
+                <div id="blogContent"></div>
+                <div class="blog-actions">
+                    <button id="likeButton" class="action-button">Like (<span id="likeCount">0</span>)</button>
+                </div>
+            </div>
+            <div class="comments-section">
+                <h2>Comments</h2>
+                <div id="commentFormContainer">
+                    <form id="commentForm">
+                        <textarea id="commentInput" placeholder="Add a comment..." required></textarea>
+                        <button type="submit" class="comment-button">Post Comment</button>
+                    </form>
+                </div>
+                <div id="commentsList"></div>
+            </div>
+        </div>
+    </section>
+    <script src="blog-detail.js"></script>
+</body>
+</html>

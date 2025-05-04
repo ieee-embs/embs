@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - Club Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo-container">
+            <img src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="Club Logo" class="club-logo">
+        </div>
+        <div class="form-container">
+            <!-- Registration Form -->
+            <div id="registerFormContainer">
+                <h2>Register</h2>
+                <form id="registrationForm">
+                    <div class="input-group">
+                        <label for="registerEmail">Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="registerEmail" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="registerPassword">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="registerPassword" name="password" placeholder="Enter your password" required>
+                            <span class="toggle-password" data-form="register">👁️</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-button">Register</button>
+                </form>
+                <div id="registrationMessage"></div>
+                <p class="switch-link">Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginFormContainer" style="display: none;">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="loginEmail">Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+                            <span class="toggle-password" data-form="login">👁️</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-button">Login</button>
+                </form>
+                <div id="loginMessage"></div>
+                <p class="switch-link">Don't have an account? <a href="#" id="switchToRegister">Register</a></p>
+            </div>
+        </div>
+        <a href="blog.html" class="back-link">Back to Blogs</a>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

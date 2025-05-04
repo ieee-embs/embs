@@ -86,9 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                     } else {
                         // User is not an admin, show an error message or redirect
-                        moderatePostsContainer.innerHTML = '<p>You do not have permission to moderate blog posts.</p>';
-                        //  Redirect to another page:
-                        // window.location.href = "blog.html";
+                        moderatePostsContainer.innerHTML = '<p>You do not have permission to moderate blog posts.  Redirecting to login...</p>';
+                        setTimeout(() => {
+                            window.location.href = "admin_login.html";
+                        }, 3000);
+                        
                     }
                 }).catch(error => {
                     console.error("Error checking admin status:", error);
@@ -96,9 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             } else {
                 // User is not logged in, redirect to login
-                moderatePostsContainer.innerHTML = '<p>Please log in to moderate blog posts.</p>';
-                 // Redirect to the login page
-                // window.location.href = "login.html";
+                moderatePostsContainer.innerHTML = '<p>Please log in to moderate blog posts.  Redirecting to login...</p>';
+                setTimeout(() => {
+                     window.location.href = "admin_login.html";
+                }, 3000);
+               
             }
         });
     }
