@@ -162,3 +162,23 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchApprovedBlogs();
     checkBlogStatusUpdates();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const readBlogsButton = document.querySelector('.read-blogs-button');
+
+    if (readBlogsButton) {
+        readBlogsButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor behavior
+            const targetId = readBlogsButton.getAttribute('href').substring(1); // Get the target ID
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                // Scroll to the target element
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
+});

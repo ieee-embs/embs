@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog Title</title>
+  <link rel="stylesheet" href="blog-viewer.css" />
+</head>
+<body>
+  <header class="reader-header">
+    <a href="blog.html" class="back-btn">← Back</a>
+    <div class="reader-controls">
+      <button id="fontToggle">A+</button>
+      <button id="darkModeToggle">🌓</button>
+    </div>
+  </header>
+
+  <div id="scrollProgress"></div>
+
+  <main class="blog-container">
+    <h1 class="blog-title">Blog Title Goes Here</h1>
+    <div class="blog-meta">
+      <span>By <strong>Author Name</strong></span>
+      <span>•</span>
+      <span id="readTime">3 min read</span>
+    </div>
+    <article class="blog-content">
+      <p>This is where your full blog content goes. It can be dynamically inserted or hardcoded depending on how you're loading blog posts.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet...</p>
+    </article>
+  </main>
+
+  <script src="blog-viewer.js"></script>
+</body>
+</html>

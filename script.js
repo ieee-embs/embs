@@ -139,4 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
     eventCards.forEach(card => {
         eventObserver.observe(card);
     });
+
+    // Newsletter Form Submission (Placeholder)
+    const newsletterForm = document.querySelector('#newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the default form submission behavior
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            if (emailInput.value.trim() !== '') {
+                alert('Thank you for subscribing!');
+                emailInput.value = ''; // Clear the input field after submission
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+    }
 });

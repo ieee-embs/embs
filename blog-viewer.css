@@ -1,0 +1,82 @@
+body {
+    font-family: 'Georgia', serif;
+    line-height: 1.7;
+    background-color: #ffffff;
+    color: #222;
+    margin: 0;
+    padding: 0 1rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .reader-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .back-btn {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .reader-controls button {
+    margin-left: 10px;
+    padding: 6px 10px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .blog-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 2rem 0;
+  }
+  
+  .blog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .blog-meta {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  
+  .blog-content p {
+    margin-bottom: 1.5rem;
+  }
+  
+  #scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: #4CAF50;
+    width: 0%;
+    z-index: 99;
+    transition: width 0.25s;
+  }
+  
+  /* Dark mode */
+  body.dark {
+    background-color: #121212;
+    color: #eee;
+  }
+  
+  body.dark .reader-header,
+  body.dark .blog-meta {
+    border-color: #333;
+  }
+  
+  body.dark .reader-controls button {
+    background: #444;
+    color: white;
+  }
+  

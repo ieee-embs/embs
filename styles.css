@@ -684,6 +684,20 @@ body {
     font-weight: 400;
 }
 
+.team-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem; /* Adjust font size */
+    font-weight: 400; /* Normal weight for readability */
+    color: #e2e8f0; /* Light color for contrast */
+    text-align: center; /* Center-align the text */
+    margin: 1rem auto; /* Add spacing around the text */
+    max-width: 800px; /* Limit the width for better readability */
+    line-height: 1.6; /* Improve line spacing */
+    background: linear-gradient(90deg, #60a5fa, #9f7aea); /* Gradient text effect */
+    -webkit-background-clip: text; /* Clip the gradient to the text */
+    -webkit-text-fill-color: transparent; /* Make the background visible */
+}
+
 /* Events Section Styles */
 .events-section {
     padding: 5rem 1rem;
@@ -900,5 +914,423 @@ body {
 
     .register-button {
         font-size: 0.8rem;
+    }
+}
+
+/* Blog Banner Section */
+.blog-banner-section {
+    position: relative;
+    background: radial-gradient(circle at center, #1a1a40, #0a0a2a, #000000); /* Galaxy-like gradient */
+    color: #ffffff;
+    text-align: center;
+    padding: 6rem 2rem;
+    margin: 2rem 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Ensure particles stay inside the banner */
+}
+
+/* Blog Banner Content */
+.blog-banner-content {
+    position: relative;
+    z-index: 2; /* Ensure content is above particles */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.blog-banner-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+.blog-banner-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+}
+
+.blog-banner-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #3b82f6, #9f7aea);
+    border-radius: 30px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+}
+
+.blog-banner-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.7);
+}
+
+/* Particle Animation */
+.particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Ensure particles are behind content */
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: float 10s infinite ease-in-out;
+    opacity: 0.7;
+}
+
+/* Randomly position particles */
+.particle:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+.particle:nth-child(2) { top: 20%; left: 25%; animation-delay: 1s; }
+.particle:nth-child(3) { top: 30%; left: 35%; animation-delay: 2s; }
+.particle:nth-child(4) { top: 40%; left: 45%; animation-delay: 3s; }
+.particle:nth-child(5) { top: 50%; left: 55%; animation-delay: 4s; }
+.particle:nth-child(6) { top: 60%; left: 65%; animation-delay: 5s; }
+.particle:nth-child(7) { top: 70%; left: 75%; animation-delay: 6s; }
+.particle:nth-child(8) { top: 80%; left: 85%; animation-delay: 7s; }
+.particle:nth-child(9) { top: 90%; left: 95%; animation-delay: 8s; }
+.particle:nth-child(10) { top: 15%; left: 5%; animation-delay: 9s; }
+
+/* Particle Animation */
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(-20px) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+    }
+}
+
+/* Twinkling Stars */
+.star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+.star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.star:nth-child(2) { top: 30%; left: 50%; animation-delay: 1s; }
+.star:nth-child(3) { top: 50%; left: 70%; animation-delay: 2s; }
+.star:nth-child(4) { top: 70%; left: 30%; animation-delay: 3s; }
+.star:nth-child(5) { top: 90%; left: 80%; animation-delay: 4s; }
+
+/* Twinkling Animation */
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Shooting Star */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    transform: rotate(-45deg);
+    animation: shooting 5s infinite ease-in-out;
+    opacity: 0.8;
+    top: 20%;
+    left: 80%;
+}
+
+/* Shooting Star Animation */
+@keyframes shooting {
+    0% {
+        transform: translate(0, 0) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-200px, 200px) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+/* Footer Section */
+.footer-section {
+    position: relative;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+    color: #2d3748;
+    padding: 4rem 2rem 2rem;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    z-index: 1; /* Ensure footer is above other elements */
+}
+
+/* Footer Container */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Footer Brand */
+.footer-brand {
+    text-align: left;
+}
+
+.footer-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1rem;
+    transition: opacity 0.3s ease;
+}
+
+.footer-logo:hover {
+    opacity: 0.8;
+}
+
+.footer-tagline {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+/* Footer Navigation */
+.footer-nav h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.footer-nav ul {
+    list-style: none;
+}
+
+.footer-nav ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav ul li a {
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-nav ul li a:hover {
+    color: #3182ce;
+}
+
+/* Footer Contact */
+.footer-contact h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.footer-contact p {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact a {
+    color: #3182ce;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contact a:hover {
+    color: #2b6cb0;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+}
+
+/* Footer Newsletter */
+.footer-newsletter h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.footer-newsletter p {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin-bottom: 1rem;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.newsletter-form input {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.newsletter-form input:focus {
+    border-color: #3182ce;
+}
+
+.subscribe-button {
+    background: linear-gradient(135deg, #3182ce 0%, #60a5fa 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.subscribe-button:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #3182ce 100%);
+    transform: scale(1.05);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.footer-text {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+.developer-credits {
+    font-size: 0.9rem;
+    color: #3182ce;
+}
+
+.developer-credits a {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.developer-credits a:hover {
+    color: #2b6cb0;
+}
+
+/* Footer Particles */
+.footer-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Ensure particles are behind content */
+    pointer-events: none; /* Prevent particles from blocking interactions */
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(235, 212, 8, 0.8);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+    pointer-events: none; /* Ensure particles don't block interactions */
+}
+
+.particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { top: 40%; left: 30%; animation-delay: 2s; }
+.particle:nth-child(3) { top: 60%; left: 50%; animation-delay: 4s; }
+.particle:nth-child(4) { top: 80%; left: 70%; animation-delay: 6s; }
+.particle:nth-child(5) { top: 30%; left: 90%; animation-delay: 8s; }
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(-15px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.5; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-brand {
+        text-align: center;
+    }
+
+    .footer-logo {
+        margin: 0 auto 1rem;
+    }
+
+    .footer-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .newsletter-form {
+        margin: 0 auto;
     }
 }

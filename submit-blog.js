@@ -1,13 +1,18 @@
-const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL'; // Replace with your Apps Script web app URL
-
-// Live Preview Functionality
+// Form Elements
 const blogTitleInput = document.getElementById('blogTitle');
 const writerNameInput = document.getElementById('writerName');
+const userEmailInput = document.getElementById('userEmail');
+const thumbnailLinkInput = document.getElementById('thumbnailLink');
 const blogContentInput = document.getElementById('blogContent');
 const previewTitle = document.getElementById('previewTitle');
 const previewContent = document.getElementById('previewContent');
 const titleCharCounter = document.getElementById('titleCharCounter');
+const submissionMessage = document.getElementById('submissionMessage');
+const submitButton = document.getElementById('submitButton');
+const clearButton = document.getElementById('clearButton');
+const form = document.getElementById('blogSubmissionForm');
 
+// Live Preview Functionality
 blogTitleInput.addEventListener('input', () => {
     const title = blogTitleInput.value || 'Your title will appear here...';
     previewTitle.textContent = title;
@@ -19,45 +24,53 @@ blogContentInput.addEventListener('input', () => {
     previewContent.textContent = content;
 });
 
-// Form Submission
-document.getElementById('blogSubmissionForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+// Clear Form Functionality
+clearButton.addEventListener('click', () => {
+    form.reset();
+    previewTitle.textContent = 'Your title will appear here...';
+    previewContent.textContent = 'Your content will appear here as you type...';
+    titleCharCounter.textContent = '0/100';
+    submissionMessage.textContent = '';
+});
 
-    const title = blogTitleInput.value;
-    const writer = writerNameInput.value;
-    const content = blogContentInput.value;
-    const submissionMessage = document.getElementById('submissionMessage');
-    const submitButton = document.getElementById('submitButton');
+// Submit Form Functionality (using AJAX to prevent redirect)
+form.addEventListener('submit', function (event) {
+    event.preventDefault(); // Stop default submission
 
-    // Disable the button and show a loading state
     submitButton.disabled = true;
     submitButton.textContent = 'Submitting...';
 
-    try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({ title, content, writer }),
-            headers: { 'Content-Type': 'application/json' }
-        });
+    const formData = new FormData(form);
 
-        const result = await response.json();
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'Accept': 'application/json'  // Ensure Formspree returns JSON and not redirects
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            submissionMessage.style.color = '#34d399';
+            submissionMessage.textContent = 'Your blog has been submitted successfully!';
 
-        if (result.success) {
-            submissionMessage.style.color = 'green';
-            submissionMessage.innerHTML = `Blog submitted successfully! Your Blog ID is <strong>${result.blogId}</strong>.`;
-            document.getElementById('blogSubmissionForm').reset();
+            form.reset();
             previewTitle.textContent = 'Your title will appear here...';
             previewContent.textContent = 'Your content will appear here as you type...';
             titleCharCounter.textContent = '0/100';
         } else {
-            throw new Error(result.message || 'Submission failed');
+            return response.json().then(data => {
+                throw new Error(data.error || 'Form submission failed.');
+            });
         }
-    } catch (error) {
-        submissionMessage.style.color = 'red';
-        submissionMessage.textContent = 'Error submitting blog: ' + error.message;
-    } finally {
-        // Re-enable the button
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        submissionMessage.style.color = '#f87171';
+        submissionMessage.textContent = 'Something went wrong. Try again later.';
+    })
+    .finally(() => {
         submitButton.disabled = false;
         submitButton.textContent = 'Submit Blog';
-    }
+    });
 });
