@@ -908,3 +908,140 @@ html {
         background-position: 0% 50%;
     }
 }
+
+/* Footer Section */
+.footer-section {
+    background: #0a0f2b; /* Dark background */
+    color: #e2e8f0; /* Light text color */
+    padding: 3rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footer Container */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Footer Branding */
+.footer-brand {
+    text-align: center;
+}
+
+.footer-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.footer-tagline {
+    font-size: 1rem;
+    color: #a0aec0;
+    line-height: 1.5;
+}
+
+/* Footer Navigation */
+.footer-nav h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-nav ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav ul li a {
+    color: #a0aec0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-nav ul li a:hover {
+    color: #60a5fa;
+}
+
+/* Footer Contact */
+.footer-contact h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.footer-contact p {
+    font-size: 0.9rem;
+    color: #a0aec0;
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact a {
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contact a:hover {
+    color: #3b82f6;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-text {
+    font-size: 0.9rem;
+    color: #a0aec0;
+    margin-bottom: 0.5rem;
+}
+
+.developer-credits {
+    font-size: 0.9rem;
+    color: #60a5fa;
+}
+
+.developer-credits a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.developer-credits a:hover {
+    color: #3b82f6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-logo {
+        margin: 0 auto 1rem;
+    }
+
+    .footer-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+}

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI in Medical Imaging: From Pixels to Diagnosis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.9;
+    background: linear-gradient(to bottom, #f0f4f8 0%, #e2e8f0 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 0 2rem;
+    transition: background-color 0.3s, color 0.3s;
+    animation: fadeIn 0.5s ease-in;
+    overflow-x: hidden;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .reader-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 98;
+    flex-wrap: wrap;
+  }
+  
+  .back-btn {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    min-height: 36px;
+  }
+  
+  .back-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .reader-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .reader-controls button {
+    margin-left: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: #ffffff;
+    color: #1e3a8a;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .reader-controls button:hover {
+    transform: scale(1.05);
+    background: #f1f5f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .reader-controls button:active {
+    background: #e2e8f0;
+    transform: scale(0.95);
+  }
+  
+  .blog-container {
+    max-width: 740px;
+    margin: 3rem auto;
+    padding: 3rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .blog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 0.6rem;
+    color: #111827;
+    font-weight: 700;
+  }
+  
+  .blog-meta {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  
+  .blog-content {
+    font-size: 1.1rem;
+  }
+  
+  .blog-content p {
+    margin-bottom: 2rem;
+    font-size: inherit;
+    color: #374151;
+  }
+  
+  .blog-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #111827;
+    margin: 2.5rem 0 1.5rem;
+    font-weight: 700;
+  }
+  
+  .blog-content h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin: 2rem 0 1rem;
+    font-weight: 500;
+  }
+  
+  .blog-content ul {
+    list-style-type: disc;
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+  }
+  
+  .blog-content li {
+    margin-bottom: 1rem;
+    font-size: inherit;
+    color: #374151;
+  }
+  
+  .blog-content strong {
+    font-weight: 500;
+  }
+  
+  #scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 6px;
+    background: linear-gradient(to right, #3b82f6, #1e3a8a);
+    width: 0%;
+    z-index: 99;
+    transition: width 0.3s ease-out;
+    border-radius: 0 3px 3px 0;
+  }
+  
+  .share-notif, .pdf-notif, .pdf-error {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #3b82f6;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+    font-size: 0.95rem;
+  }
+  
+  .pdf-error {
+    background: #ef4444;
+  }
+  
+  .share-notif.show, .pdf-notif.show, .pdf-error.show {
+    opacity: 1;
+  }
+  
+  .share-popup {
+    position: fixed;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    min-width: 200px;
+    animation: popupFade 0.3s ease-in;
+  }
+  
+  @keyframes popupFade {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .share-popup a, .share-popup button {
+    text-decoration: none;
+    color: #1f2937;
+    background: #f3f4f6;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .share-popup a:hover, .share-popup button:hover {
+    background: #e5e7eb;
+    transform: translateX(5px);
+  }
+  
+  body.dark {
+    background: linear-gradient(to bottom, #1f2937 0%, #111827 100%);
+    color: #d1d5db;
+  }
+  
+  body.dark .blog-container {
+    background: #1f2937;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  body.dark .reader-header {
+    background: linear-gradient(135deg, #111827 0%, #374151 100%);
+  }
+  
+  body.dark .back-btn {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  body.dark .back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  body.dark .reader-controls button {
+    background: #374151;
+    color: #d1d5db;
+  }
+  
+  body.dark .reader-controls button:hover {
+    background: #4b5563;
+  }
+  
+  body.dark .reader-controls button:active {
+    background: #6b7280;
+  }
+  
+  body.dark .blog-title {
+    color: #f3f4f6;
+  }
+  
+  body.dark .blog-meta {
+    color: #9ca3af;
+  }
+  
+  body.dark .blog-content p {
+    color: #d1d5db;
+  }
+  
+  body.dark .blog-content h2 {
+    color: #f3f4f6;
+  }
+  
+  body.dark .blog-content h3 {
+    color: #d1d5db;
+  }
+  
+  body.dark .blog-content li {
+    color: #d1d5db;
+  }
+  
+  body.dark .share-popup {
+    background: #374151;
+    border-color: #4b5563;
+  }
+  
+  body.dark .share-popup a, body.dark .share-popup button {
+    color: #d1d5db;
+    background: #4b5563;
+  }
+  
+  body.dark .share-popup a:hover, body.dark .share-popup button:hover {
+    background: #6b7280;
+  }
+
+  body.dark .share-notif, body.dark .pdf-notif {
+    background: #4b5563;
+  }
+  
+  body.dark .pdf-error {
+    background: #b91c1c;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 0 1rem;
+    }
+    
+    .reader-header {
+      padding: 0.6rem 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    .back-btn {
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      min-height: 32px;
+    }
+    
+    .reader-controls {
+      width: 100%;
+      justify-content: flex-end;
+      margin-left: 0;
+      gap: 6px;
+    }
+    
+    .reader-controls button {
+      margin-left: 6px;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      min-height: 32px;
+    }
+    
+    .blog-container {
+      max-width: 100%;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .blog-title {
+      font-size: 2rem;
+    }
+    
+    .blog-meta {
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    
+    .blog-content {
+      font-size: 1rem;
+    }
+    
+    .blog-content p {
+      font-size: inherit;
+      margin-bottom: 1.5rem;
+    }
+    
+    .blog-content h2 {
+      font-size: 1.6rem;
+      margin: 2rem 0 1rem;
+    }
+    
+    .blog-content h3 {
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.8rem;
+    }
+    
+    .blog-content ul {
+      padding-left: 1.5rem;
+    }
+    
+    .blog-content li {
+      font-size: inherit;
+    }
+    
+    .share-popup {
+      min-width: 160px;
+      right: 10px !important;
+      top: auto !important;
+      bottom: 60px;
+    }
+    
+    .share-popup a, .share-popup button {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+    
+    .share-notif, .pdf-notif, .pdf-error {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .reader-controls {
+      gap: 6px;
+    }
+    
+    .reader-controls button {
+      margin-left: 4px;
+      padding: 5px 8px;
+      font-size: 0.85rem;
+      min-height: 30px;
+    }
+    
+    .back-btn {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      min-height: 30px;
+    }
+    
+    .blog-title {
+      font-size: 1.8rem;
+    }
+    
+    .blog-content {
+      font-size: 0.95rem;
+    }
+    
+    .blog-content p {
+      font-size: inherit;
+    }
+    
+    .blog-content h2 {
+      font-size: 1.4rem;
+    }
+    
+    .blog-content h3 {
+      font-size: 1.2rem;
+    }
+    
+    .blog-content li {
+      font-size: inherit;
+    }
+  }
+</style>
+<body>
+  <header class="reader-header">
+    <a href="blog.html" class="back-btn">Back</a>
+    <div class="reader-controls">
+      <button id="fontIncrease" title="Increase font size">A+</button>
+      <button id="fontDecrease" title="Decrease font size">A-</button>
+      <button id="darkModeToggle" title="Toggle dark mode">🌓</button>
+      <button id="exportPDF" title="Export to PDF">📄</button>
+      <button id="shareBtn" title="Share this post">📤</button>
+    </div>
+  </header>
+
+  <div id="scrollProgress"></div>
+
+  <main class="blog-container">
+    <h1 class="blog-title">AI in Medical Imaging: From Pixels to Diagnosis</h1>
+    <div class="blog-meta">
+      <span>By <strong>Amogh Shastry</strong> <i>Vice Chair IEEE EMBS | 2nd Year Medical Electronics Engineering</i></span>
+      <span>•</span>
+      <span id="readTime">4 min read</span>
+    </div>
+    <article class="blog-content">
+      <p>In the last decade, artificial intelligence (AI) has redefined the contours of modern healthcare, with one of its most remarkable transformations taking place in the realm of medical imaging. From blurry grayscale scans to pixel-perfect diagnostic tools, AI is revolutionizing how clinicians detect, analyze, and act on medical images—reducing diagnostic errors, accelerating workflows, and unlocking insights invisible to the human eye.</p>
+      
+      <h2>The Role of Medical Imaging in Modern Healthcare</h2>
+      <p>Medical imaging—comprising X-rays, CT scans, MRI, ultrasound, PET scans, and more—is foundational to the diagnosis and treatment of countless diseases. Radiologists interpret these images to detect abnormalities such as tumors, fractures, infections, or organ dysfunctions.</p>
+      <p>However, interpreting these scans requires years of training and even then is subject to human limitations. Fatigue, cognitive bias, inter-observer variability, and increasing caseloads contribute to diagnostic errors. This is where AI steps in, not to replace clinicians, but to augment their capabilities—bringing machine precision to medical intuition.</p>
+      
+      <h2>How AI "Sees": Deep Learning in Imaging</h2>
+      <p>The AI systems used in medical imaging primarily rely on deep learning, especially convolutional neural networks (CNNs). These algorithms mimic how the human brain processes visual data. When trained on large datasets of annotated images, CNNs learn to detect features such as lesions, fractures, or tissue anomalies.</p>
+      <p>For example:</p>
+      <ul>
+        <li>A CNN might learn to detect lung nodules in chest X-rays by identifying shape, size, and texture.</li>
+        <li>In MRI scans, AI can help detect early signs of brain tumors or multiple sclerosis that are subtle to the human eye.</li>
+        <li>For mammography, AI has demonstrated performance comparable to experienced radiologists in breast cancer screening.</li>
+      </ul>
+      <p>The journey from raw pixel data to actionable diagnosis is powered by layers of neural processing, feature extraction, pattern recognition, and probability estimation—often surpassing human speed and consistency.</p>
+      
+      <h2>Applications of AI in Medical Imaging</h2>
+      <h3>Early Detection of Diseases</h3>
+      <p>AI models can detect anomalies earlier than traditional methods. For instance:</p>
+      <ul>
+        <li>Diabetic retinopathy can be identified using AI algorithms analyzing fundus images.</li>
+        <li>Lung cancer can be detected in CT scans with high sensitivity using low-dose screening enhanced by AI.</li>
+      </ul>
+      
+      <h3>Automated Image Segmentation</h3>
+      <p>AI aids in delineating organs and lesions in images, a crucial step in radiation therapy planning and surgery. Tools like U-Net architectures are commonly used for organ segmentation in CT and MRI.</p>
+      
+      <h3>Workflow Optimization</h3>
+      <p>AI can triage urgent cases, flagging critical conditions (e.g., brain hemorrhage or pneumothorax) for priority reading. This improves turnaround time in overburdened radiology departments.</p>
+      
+      <h3>Radiomics and Prognostics</h3>
+      <p>AI can extract quantitative features (radiomics) from images to predict disease progression or treatment response. For example, tumor heterogeneity metrics derived from CT can indicate how well a patient might respond to chemotherapy.</p>
+      
+      <h3>Guided Interventions and Robotics</h3>
+      <p>In interventional radiology, AI assists in real-time imaging guidance, improving precision during biopsies or catheter placements. Combined with robotics, it’s laying the groundwork for autonomous surgery guided by medical imaging.</p>
+      
+      <h2>AI vs Radiologists: Collaboration, Not Competition</h2>
+      <p>There’s a common myth that AI will replace radiologists. In reality, the future is collaborative. AI excels at repetitive tasks, pattern recognition, and data processing—areas where human fatigue or bias can impair judgment.</p>
+      <p>However, radiologists bring contextual understanding, clinical reasoning, and ethical decision-making, which AI cannot replicate. The best outcomes arise when AI tools act as second readers—flagging errors, suggesting differential diagnoses, and highlighting subtle abnormalities.</p>
+      <p>A study in The Lancet Digital Health showed that thecombination of radiologists and AI had higher diagnostic accuracy than either working alone.</p>
+      
+      <h2>Challenges and Ethical Considerations</h2>
+      <ul>
+        <li><strong>Data Bias and Generalizability</strong><br>AI models trained on specific population datasets may underperform on others. A model trained on North American data may not generalize well to patients in Asia or Africa.</li>
+        <li><strong>Lack of Transparency</strong><br>Deep learning models often act as “black boxes,” offering little insight into how a decision was made. This lack of explainability can hinder clinical trust and regulatory approval.</li>
+        <li><strong>Data Privacy and Security</strong><br>Medical images contain sensitive information. Ensuring HIPAA and GDPR compliance during data storage, training, and sharing is critical.</li>
+        <li><strong>Regulatory Hurdles</strong><br>FDA and other regulatory bodies are still developing robust frameworks for evaluating and approving AI-based diagnostic tools. The evolving landscape of Software as a Medical Device (SaMD) demands careful clinical validation.</li>
+      </ul>
+      
+      <h2>Democratizing Healthcare Through AI Imaging</h2>
+      <p>One of the most exciting potentials of AI is in resource-limited settings. In regions lacking trained radiologists, AI-powered mobile apps or cloud platforms can assist in screening TB, pneumonia, or fractures using smartphone-captured images or portable X-rays.</p>
+      <p>Startups and NGOs are increasingly deploying AI-based teleradiology systems in rural clinics, enabling early diagnosis and referrals that save lives.</p>
+      
+      <h2>The Future: Personalized and Predictive Imaging</h2>
+      <p>Looking ahead, the future of AI in medical imaging lies in integration with:</p>
+      <ul>
+        <li><strong>Genomics</strong><br>Linking imaging features with genetic data for precision medicine.</li>
+        <li><strong>Electronic Health Records (EHRs)</strong><br>Providing richer clinical context to AI models.</li>
+        <li><strong>Digital Twins</strong><br>Creating virtual models of patient anatomy and pathology for personalized simulation and treatment.</li>
+      </ul>
+      <p>The move is not just from pixels to diagnosis, but from pixels to prediction—enabling early intervention, monitoring progression, and optimizing care pathways.</p>
+      
+      <h2>Final Thoughts</h2>
+      <p>AI in medical imaging is no longer a futuristic concept; it’s an evolving reality shaping the present and future of diagnostics. By bridging the gap between data and decision, it empowers clinicians, enhances efficiency, and holds the promise of more equitable and accurate healthcare.</p>
+      <p>But like any powerful tool, it demands responsible use, rigorous validation, and ethical oversight. When developed and deployed wisely, AI doesn’t just see better—it helps us see further, into a healthier and smarter future.</p>
+    </article>
+  </main>
+
+  <div id="sharePopup" class="share-popup">
+    <a id="shareTwitter" href="#" target="_blank">🖋 Share on X</a>
+    <a id="shareFacebook" href="#" target="_blank">📘 Share on Facebook</a>
+    <a id="shareLinkedIn" href="#" target="_blank">💼 Share on LinkedIn</a>
+    <button id="copyLink">📋 Copy Link</button>
+  </div>
+  <div id="shareNotif" class="share-notif">Link copied!</div>
+  <div id="pdfNotif" class="pdf-notif">PDF downloaded!</div>
+  <div id="pdfError" class="pdf-error">Failed to generate PDF.</div>
+</body>
+<script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  });
+
+  // Font size controls
+  const content = document.querySelector('.blog-content');
+  document.getElementById('fontIncrease').addEventListener('click', () => {
+    let currentSize = parseFloat(window.getComputedStyle(content).fontSize);
+    let newSize = currentSize + 2;
+    if (newSize <= 28) {
+      content.style.fontSize = `${newSize}px !important`;
+      console.log(`Font size increased to ${newSize}px`);
+    }
+  });
+
+  document.getElementById('fontDecrease').addEventListener('click', () => {
+    let currentSize = parseFloat(window.getComputedStyle(content).fontSize);
+    let newSize = currentSize - 2;
+    if (newSize >= 10) {
+      content.style.fontSize = `${newSize}px !important`;
+      console.log(`Font size decreased to ${newSize}px`);
+    }
+  });
+
+  // Dark mode toggle
+  document.getElementById('darkModeToggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+  });
+
+  // Read time estimation
+  window.addEventListener('DOMContentLoaded', () => {
+    const words = document.querySelector('.blog-content').innerText.split(' ').length;
+    const readTime = Math.ceil(words / 200);
+    document.getElementById('readTime').textContent = `${readTime} min read`;
+  });
+
+  // Export to PDF
+  document.getElementById('exportPDF').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    if (!jsPDF) {
+      console.error('jsPDF not loaded.');
+      showPDFError();
+      return;
+    }
+
+    try {
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const title = document.querySelector('.blog-title').innerText;
+      const meta = document.querySelector('.blog-meta').innerText;
+      const contentElements = document.querySelector('.blog-content').children;
+
+      let y = 20;
+      const margin = 15;
+      const pageWidth = doc.internal.pageSize.width - 2 * margin;
+
+      // Add title
+      doc.setFont('times', 'bold');
+      doc.setFontSize(20);
+      doc.text(title, margin, y, { maxWidth: pageWidth });
+      y += doc.getTextDimensions(title, { maxWidth: pageWidth }).h + 10;
+
+      // Add meta
+      doc.setFont('times', 'normal');
+      doc.setFontSize(12);
+      doc.text(meta, margin, y);
+      y += 10;
+
+      // Add content
+      doc.setFontSize(11);
+      Array.from(contentElements).forEach(element => {
+        if (y > 260) {
+          doc.addPage();
+          y = 20;
+        }
+
+        if (element.tagName === 'P') {
+          const text = element.innerText;
+          doc.setFont('times', 'normal');
+          doc.text(text, margin, y, { maxWidth: pageWidth });
+          y += doc.getTextDimensions(text, { maxWidth: pageWidth }).h + 5;
+        } else if (element.tagName === 'H2') {
+          doc.setFont('times', 'bold');
+          doc.setFontSize(14);
+          doc.text(element.innerText, margin, y);
+          y += 10;
+        } else if (element.tagName === 'H3') {
+          doc.setFont('times', 'bold');
+          doc.setFontSize(12);
+          doc.text(element.innerText, margin, y);
+          y += 8;
+        } else if (element.tagName === 'UL') {
+          Array.from(element.children).forEach(li => {
+            if (y > 260) {
+              doc.addPage();
+              y = 20;
+            }
+            const text = `• ${li.innerText.replace('\n', ' ')}`;
+            doc.setFont('times', 'normal');
+            doc.setFontSize(11);
+            doc.text(text, margin + 5, y, { maxWidth: pageWidth - 5 });
+            y += doc.getTextDimensions(text, { maxWidth: pageWidth - 5 }).h + 3;
+          });
+        }
+      });
+
+      // Save PDF
+      const filename = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.pdf';
+      doc.save(filename);
+      
+      // Show success notification
+      const pdfNotif = document.getElementById('pdfNotif');
+      pdfNotif.classList.add('show');
+      setTimeout(() => pdfNotif.classList.remove('show'), 2000);
+      
+      console.log('PDF generated successfully.');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      showPDFError();
+    }
+  });
+
+  function showPDFError() {
+    const pdfError = document.getElementById('pdfError');
+    pdfError.classList.add('show');
+    setTimeout(() => pdfError.classList.remove('show'), 3000);
+  }
+
+  // Share feature
+  const shareBtn = document.getElementById('shareBtn');
+  const sharePopup = document.getElementById('sharePopup');
+  const shareNotif = document.getElementById('shareNotif');
+
+  shareBtn.addEventListener('click', (e) => {
+    const isVisible = sharePopup.style.display === 'flex';
+    sharePopup.style.display = isVisible ? 'none' : 'flex';
+    if (!isVisible) {
+      const rect = shareBtn.getBoundingClientRect();
+      if (window.innerWidth > 768) {
+        sharePopup.style.top = `${rect.bottom + 5}px`;
+        sharePopup.style.right = `${window.innerWidth - rect.right}px`;
+      } else {
+        sharePopup.style.top = 'auto';
+        sharePopup.style.right = '10px';
+        sharePopup.style.bottom = '60px';
+      }
+      
+      const blogTitle = document.querySelector('.blog-title').innerText;
+      const url = window.location.href;
+      
+      document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(blogTitle)}&url=${encodeURIComponent(url)}`;
+      document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(blogTitle)}`;
+    }
+  });
+
+  document.getElementById('copyLink').addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      sharePopup.style.display = 'none';
+      shareNotif.classList.add('show');
+      setTimeout(() => shareNotif.classList.remove('show'), 2000);
+    });
+  });
+
+  // Close share popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!sharePopup.contains(e.target) && e.target !== shareBtn) {
+      sharePopup.style.display = 'none';
+    }
+  });
+</script>
+</html>

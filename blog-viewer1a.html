@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ethical AI in Healthcare: Who's Accountable for a Wrong Diagnosis?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.9;
+    background: linear-gradient(to bottom, #f0f4f8 0%, #e2e8f0 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 0 2rem;
+    transition: background-color 0.3s, color 0.3s;
+    animation: fadeIn 0.5s ease-in;
+    overflow-x: hidden;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .reader-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 98;
+    flex-wrap: wrap;
+  }
+  
+  .back-btn {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    min-height: 36px;
+  }
+  
+  .back-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .reader-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .reader-controls button {
+    margin-left: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: #ffffff;
+    color: #1e3a8a;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .reader-controls button:hover {
+    transform: scale(1.05);
+    background: #f1f5f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .reader-controls button:active {
+    background: #e2e8f0;
+    transform: scale(0.95);
+  }
+  
+  .blog-container {
+    max-width: 740px;
+    margin: 3rem auto;
+    padding: 3rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .blog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 0.6rem;
+    color: #111827;
+    font-weight: 700;
+  }
+  
+  .blog-meta {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  
+  .blog-content {
+    font-size: 1.1rem;
+  }
+  
+  .blog-content p {
+    margin-bottom: 2rem;
+    font-size: inherit;
+    color: #374151;
+  }
+  
+  .blog-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #111827;
+    margin: 2.5rem 0 1.5rem;
+    font-weight: 700;
+  }
+  
+  .blog-content h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin: 2rem 0 1rem;
+    font-weight: 500;
+  }
+  
+  .blog-content ul {
+    list-style-type: disc;
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+  }
+  
+  .blog-content li {
+    margin-bottom: 1rem;
+    font-size: inherit;
+    color: #374151;
+  }
+  
+  .blog-content strong {
+    font-weight: 500;
+  }
+  
+  #scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 6px;
+    background: linear-gradient(to right, #3b82f6, #1e3a8a);
+    width: 0%;
+    z-index: 99;
+    transition: width 0.3s ease-out;
+    border-radius: 0 3px 3px 0;
+  }
+  
+  /* Share and PDF notifications */
+  .share-notif, .pdf-notif, .pdf-error {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #3b82f6;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+    font-size: 0.95rem;
+  }
+  
+  .pdf-error {
+    background: #ef4444;
+  }
+  
+  .share-notif.show, .pdf-notif.show, .pdf-error.show {
+    opacity: 1;
+  }
+  
+  /* Share popup */
+  .share-popup {
+    position: fixed;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    min-width: 200px;
+    animation: popupFade 0.3s ease-in;
+  }
+  
+  @keyframes popupFade {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .share-popup a, .share-popup button {
+    text-decoration: none;
+    color: #1f2937;
+    background: #f3f4f6;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .share-popup a:hover, .share-popup button:hover {
+    background: #e5e7eb;
+    transform: translateX(5px);
+  }
+  
+  /* Dark mode */
+  body.dark {
+    background: linear-gradient(to bottom, #1f2937 0%, #111827 100%);
+    color: #d1d5db;
+  }
+  
+  body.dark .blog-container {
+    background: #1f2937;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  body.dark .reader-header {
+    background: linear-gradient(135deg, #111827 0%, #374151 100%);
+  }
+  
+  body.dark .back-btn {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  body.dark .back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  body.dark .reader-controls button {
+    background: #374151;
+    color: #d1d5db;
+  }
+  
+  body.dark .reader-controls button:hover {
+    background: #4b5563;
+  }
+  
+  body.dark .reader-controls button:active {
+    background: #6b7280;
+  }
+  
+  body.dark .blog-title {
+    color: #f3f4f6;
+  }
+  
+  body.dark .blog-meta {
+    color: #9ca3af;
+  }
+  
+  body.dark .blog-content p {
+    color: #d1d5db;
+  }
+  
+  body.dark .blog-content h2 {
+    color: #f3f4f6;
+  }
+  
+  body.dark .blog-content h3 {
+    color: #d1d5db;
+  }
+  
+  body.dark .blog-content li {
+    color: #d1d5db;
+  }
+  
+  body.dark .share-popup {
+    background: #374151;
+    border-color: #4b5563;
+  }
+  
+  body.dark .share-popup a, body.dark .share-popup button {
+    color: #d1d5db;
+    background: #4b5563;
+  }
+  
+  body.dark .share-popup a:hover, body.dark .share-popup button:hover {
+    background: #6b7280;
+  }
+
+  body.dark .share-notif, body.dark .pdf-notif {
+    background: #4b5563;
+  }
+  
+  body.dark .pdf-error {
+    background: #b91c1c;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    body {
+      padding: 0 1rem;
+    }
+    
+    .reader-header {
+      padding: 0.6rem 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    .back-btn {
+      font-size: 0.95rem;
+      padding: 6px 12px;
+      min-height: 32px;
+    }
+    
+    .reader-controls {
+      width: 100%;
+      justify-content: flex-end;
+      margin-left: 0;
+      gap: 6px;
+    }
+    
+    .reader-controls button {
+      margin-left: 6px;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      min-height: 32px;
+    }
+    
+    .blog-container {
+      max-width: 100%;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .blog-title {
+      font-size: 2rem;
+    }
+    
+    .blog-meta {
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    
+    .blog-content {
+      font-size: 1rem;
+    }
+    
+    .blog-content p {
+      font-size: inherit;
+      margin-bottom: 1.5rem;
+    }
+    
+    .blog-content h2 {
+      font-size: 1.6rem;
+      margin: 2rem 0 1rem;
+    }
+    
+    .blog-content h3 {
+      font-size: 1.3rem;
+      margin: 1.5rem 0 0.8rem;
+    }
+    
+    .blog-content ul {
+      padding-left: 1.5rem;
+    }
+    
+    .blog-content li {
+      font-size: inherit;
+    }
+    
+    .share-popup {
+      min-width: 160px;
+      right: 10px !important;
+      top: auto !important;
+      bottom: 60px;
+    }
+    
+    .share-popup a, .share-popup button {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+    
+    .share-notif, .pdf-notif, .pdf-error {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .reader-controls {
+      gap: 6px;
+    }
+    
+    .reader-controls button {
+      margin-left: 4px;
+      padding: 5px 8px;
+      font-size: 0.85rem;
+      min-height: 30px;
+    }
+    
+    .back-btn {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      min-height: 30px;
+    }
+    
+    .blog-title {
+      font-size: 1.8rem;
+    }
+    
+    .blog-content {
+      font-size: 0.95rem;
+    }
+    
+    .blog-content p {
+      font-size: inherit;
+    }
+    
+    .blog-content h2 {
+      font-size: 1.4rem;
+    }
+    
+    .blog-content h3 {
+      font-size: 1.2rem;
+    }
+    
+    .blog-content li {
+      font-size: inherit;
+    }
+  }
+</style>
+<body>
+  <header class="reader-header">
+    <a href="blog.html" class="back-btn">← Back to Blogs</a>
+    <div class="reader-controls">
+      <button id="fontIncrease" title="Increase font size">A+</button>
+      <button id="fontDecrease" title="Decrease font size">A-</button>
+      <button id="darkModeToggle" title="Toggle dark mode">🌓</button>
+      <button id="exportPDF" title="Export to PDF">📄</button>
+      <button id="shareBtn" title="Share this post">📤</button>
+    </div>
+  </header>
+
+  <div id="scrollProgress"></div>
+
+  <main class="blog-container">
+    <h1 class="blog-title">Ethical AI in Healthcare: Who's Accountable for a Wrong Diagnosis?</h1>
+    <div class="blog-meta">
+      <span>By <strong>Omm Sharma</strong> <i style="font-size: 13px;">2nd Year Medical Electronics Engineering</i></span>
+      <span>•</span>
+      <span id="readTime">3 min read</span>
+    </div>
+    <article class="blog-content">
+      <p>Imagine going to a hospital, getting your test results, and being told everything is normal—only to discover later that an AI system misread your scan. Now you're left wondering: Who's responsible? The hospital? The AI developer? The doctor who trusted the tool?</p>
+      <p>This is not a sci-fi scenario. As AI becomes more common in healthcare—especially in areas like diagnostics, treatment planning, and patient monitoring—we're entering complex ethical territory. While artificial intelligence brings incredible promise, it also introduces new questions that the medical field hasn't fully answered yet. And one of the most pressing is this: Who's accountable when AI makes a mistake?</p>
+      
+      <h2>The Rise of AI in Healthcare</h2>
+      <p>AI is rapidly becoming a trusted companion in modern medicine. From detecting tumors in X-rays to predicting patient deterioration, AI tools are helping healthcare professionals make faster, more informed decisions.</p>
+      <p>These systems learn by analyzing massive datasets—medical images, patient histories, lab results—to recognize patterns and generate predictions. In many cases, they can spot anomalies that human eyes might miss. But like any tool, AI isn't infallible.</p>
+      <p>Errors can—and do—happen. When they do, untangling who is legally and ethically responsible gets complicated.</p>
+      
+      <h2>Who's in the Loop? The Human-AI Partnership</h2>
+      <p>Before diving into accountability, it's important to understand how AI is used. In most current systems, AI doesn't act alone. It functions as a decision support tool, offering suggestions or flagging concerns that clinicians then evaluate.</p>
+      <p>So, if an AI tool misidentifies a lesion in an MRI, and the doctor relies solely on that result, does the fault lie with the AI developer? Or the doctor who didn't double-check?</p>
+      <p>Here are some possibilities:</p>
+      <ul>
+        <li><strong>The Clinician</strong><br>Traditionally, doctors have the final say in diagnosis and treatment. Even with AI in the mix, many argue that it's the clinician's duty to interpret and verify any AI-generated recommendation. But what happens when the system is marketed as "more accurate than a human"? Can we still blame the doctor for trusting it?</li>
+        <li><strong>The Hospital or Institution</strong><br>Hospitals are responsible for the tools they integrate into their practice. If they implement an AI model without proper validation, training, or oversight, they could be held liable for resulting harm.</li>
+        <li><strong>The AI Developers</strong><br>What about the companies building these tools? Shouldn't they be held accountable for how their algorithms perform in real-world settings? Yes—but here's the catch: developers often rely on "black-box" models, where even they can't fully explain how the AI made a particular decision. That makes blame hard to assign in courtrooms and harder still in clinical settings.</li>
+      </ul>
+      
+      <h2>Legal Grey Zones</h2>
+      <p>Right now, regulations are struggling to keep up with the pace of AI innovation in healthcare. In many countries, AI-based diagnostic tools fall under the category of Software as a Medical Device (SaMD). They must undergo testing and approval—like drugs or traditional medical devices. However, most regulations assume the tool's behavior remains fixed.</p>
+      <p>But modern AI models can adapt and evolve based on new data. A model approved today might function differently a year from now. Who's responsible if it makes a mistake later? That's still up for debate.</p>
+      <p>Some experts propose creating shared accountability frameworks, where responsibility is distributed among developers, healthcare providers, and institutions. Others advocate for AI to remain purely assistive, ensuring that ultimate accountability stays with clinicians.</p>
+      
+      <h2>Ethical Dilemmas Beyond Blame</h2>
+      <p>It's not just about legal liability. Ethical concerns are just as critical.</p>
+      <ul>
+        <li><strong>Informed Consent</strong><br>Should patients be told when AI plays a role in their diagnosis or treatment? Most people would want to know if a machine—not just a doctor—contributed to a life-changing medical decision.</li>
+        <li><strong>Bias in AI Models</strong><br>AI systems trained on biased data can perpetuate or even amplify healthcare inequalities. If an algorithm misdiagnoses a condition in a certain demographic group because it wasn't adequately trained on diverse data, that's not just a technical issue—it's an ethical one.</li>
+        <li><strong>Transparency</strong><br>How do we build trust in systems that we can't fully understand? If a doctor challenges an AI's output, but can't explain why the system made a mistake, it complicates both patient communication and accountability.</li>
+      </ul>
+      
+      <h2>Building Ethical AI: A Shared Responsibility</h2>
+      <p>Solving these issues won't be easy, but progress is possible. Here's what a more ethical AI ecosystem in healthcare might look like:</p>
+      <ul>
+        <li><strong>Transparent Development</strong><br>Developers should prioritize explainable AI—models that can provide clear reasoning for their decisions. This helps both clinicians and patients understand what the system is doing and why.</li>
+        <li><strong>Thorough Validation</strong><br>AI tools must be rigorously tested across diverse datasets and real-world settings before deployment. Continuous monitoring after implementation is just as important.</li>
+        <li><strong>Clear Guidelines</strong><br>Hospitals and regulators need well-defined protocols outlining how AI should be used, who is responsible in various scenarios, and how errors should be reported and managed.</li>
+        <li><strong>Human Oversight</strong><br>AI should never operate in isolation. Clinical decisions should always involve human judgment, especially when patient safety is on the line.</li>
+      </ul>
+      
+      <h2>A New Kind of Doctor-Patient Relationship?</h2>
+      <p>As AI becomes a bigger part of healthcare, patients may start asking different questions: Was this diagnosis reviewed by a human? Can I see the AI's reasoning? What happens if it was wrong?</p>
+      <p>Doctors, in turn, will need to be trained not just in medicine, but in how to collaborate with intelligent systems. This new reality blurs the line between medicine and technology—and demands a new kind of accountability.</p>
+      
+      <h2>Final Thoughts: Responsibility in the Age of Algorithms</h2>
+      <p>AI in healthcare is no longer experimental—it's here, and it's powerful. But with power comes responsibility.</p>
+      <p>We can't allow AI to become a black box we blindly trust. Nor can we expect doctors to carry the entire burden of accountability for tools they didn't build. Instead, we need shared ethical frameworks, stronger regulations, and a commitment to transparency, fairness, and human oversight.</p>
+      <p>Because in the end, when a diagnosis is wrong, it's not just a technical failure. It's someone's life. And every life deserves a system that's not only smart—but also just.</p>
+    </article>
+    <div class="container verify-credits" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-weight: bold;font-size: 10px;">
+      <p>Article Published by : Omm Sharma</p>
+      <p>Article Verified by : Rishi Raj</p>
+      <p>Moderation and Online support : Sujal Sharma</p>
+    </div>
+  </main>
+
+  <div id="sharePopup" class="share-popup">
+    <a id="shareTwitter" href="#" target="_blank">🖋 Share on X</a>
+    <a id="shareFacebook" href="#" target="_blank">📘 Share on Facebook</a>
+    <a id="shareLinkedIn" href="#" target="_blank">💼 Share on LinkedIn</a>
+    <button id="copyLink">📋 Copy Link</button>
+  </div>
+  <div id="shareNotif" class="share-notif">Link copied!</div>
+  <div id="pdfNotif" class="pdf-notif">PDF downloaded!</div>
+  <div id="pdfError" class="pdf-error">Failed to generate PDF.</div>
+</body>
+<script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  });
+
+  // Font size controls
+  const content = document.querySelector('.blog-content');
+  document.getElementById('fontIncrease').addEventListener('click', () => {
+    let currentSize = parseFloat(window.getComputedStyle(content).fontSize);
+    let newSize = currentSize + 2;
+    if (newSize <= 28) {
+      content.style.fontSize = `${newSize}px`;
+      console.log(`Font size increased to ${newSize}px`);
+    }
+  });
+
+  document.getElementById('fontDecrease').addEventListener('click', () => {
+    let currentSize = parseFloat(window.getComputedStyle(content).fontSize);
+    let newSize = currentSize - 2;
+    if (newSize >= 10) {
+      content.style.fontSize = `${newSize}px`;
+      console.log(`Font size decreased to ${newSize}px`);
+    }
+  });
+
+  // Dark mode toggle
+  document.getElementById('darkModeToggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+  });
+
+  // Read time estimation
+  window.addEventListener('DOMContentLoaded', () => {
+    const words = document.querySelector('.blog-content').innerText.split(' ').length;
+    const readTime = Math.ceil(words / 200);
+    document.getElementById('readTime').textContent = `${readTime} min read`;
+  });
+
+  // Export to PDF
+  document.getElementById('exportPDF').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    if (!jsPDF) {
+      console.error('jsPDF not loaded.');
+      showPDFError();
+      return;
+    }
+
+    try {
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const title = document.querySelector('.blog-title').innerText;
+      const meta = document.querySelector('.blog-meta').innerText;
+      const contentElements = document.querySelector('.blog-content').children;
+
+      let y = 20;
+      const margin = 15;
+      const pageWidth = doc.internal.pageSize.width - 2 * margin;
+
+      // Add title
+      doc.setFont('times', 'bold');
+      doc.setFontSize(20);
+      doc.text(title, margin, y, { maxWidth: pageWidth });
+      y += doc.getTextDimensions(title, { maxWidth: pageWidth }).h + 10;
+
+      // Add meta
+      doc.setFont('times', 'normal');
+      doc.setFontSize(12);
+      doc.text(meta, margin, y);
+      y += 10;
+
+      // Add content
+      doc.setFontSize(11);
+      Array.from(contentElements).forEach(element => {
+        if (y > 260) {
+          doc.addPage();
+          y = 20;
+        }
+
+        if (element.tagName === 'P') {
+          const text = element.innerText;
+          doc.setFont('times', 'normal');
+          doc.text(text, margin, y, { maxWidth: pageWidth });
+          y += doc.getTextDimensions(text, { maxWidth: pageWidth }).h + 5;
+        } else if (element.tagName === 'H2') {
+          doc.setFont('times', 'bold');
+          doc.setFontSize(14);
+          doc.text(element.innerText, margin, y);
+          y += 10;
+        } else if (element.tagName === 'H3') {
+          doc.setFont('times', 'bold');
+          doc.setFontSize(12);
+          doc.text(element.innerText, margin, y);
+          y += 8;
+        } else if (element.tagName === 'UL') {
+          Array.from(element.children).forEach(li => {
+            if (y > 260) {
+              doc.addPage();
+              y = 20;
+            }
+            const text = `• ${li.innerText.replace('\n', ' ')}`;
+            doc.setFont('times', 'normal');
+            doc.setFontSize(11);
+            doc.text(text, margin + 5, y, { maxWidth: pageWidth - 5 });
+            y += doc.getTextDimensions(text, { maxWidth: pageWidth - 5 }).h + 3;
+          });
+        }
+      });
+
+      // Save PDF
+      const filename = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.pdf';
+      doc.save(filename);
+      
+      // Show success notification
+      const pdfNotif = document.getElementById('pdfNotif');
+      pdfNotif.classList.add('show');
+      setTimeout(() => pdfNotif.classList.remove('show'), 2000);
+      
+      console.log('PDF generated successfully.');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      showPDFError();
+    }
+  });
+
+  function showPDFError() {
+    const pdfError = document.getElementById('pdfError');
+    pdfError.classList.add('show');
+    setTimeout(() => pdfError.classList.remove('show'), 3000);
+  }
+
+  // Share feature
+  const shareBtn = document.getElementById('shareBtn');
+  const sharePopup = document.getElementById('sharePopup');
+  const shareNotif = document.getElementById('shareNotif');
+
+  shareBtn.addEventListener('click', (e) => {
+    const isVisible = sharePopup.style.display === 'flex';
+    sharePopup.style.display = isVisible ? 'none' : 'flex';
+    if (!isVisible) {
+      const rect = shareBtn.getBoundingClientRect();
+      if (window.innerWidth > 768) {
+        sharePopup.style.top = `${rect.bottom + 5}px`;
+        sharePopup.style.right = `${window.innerWidth - rect.right}px`;
+      } else {
+        sharePopup.style.top = 'auto';
+        sharePopup.style.right = '10px';
+        sharePopup.style.bottom = '60px';
+      }
+      
+      const blogTitle = document.querySelector('.blog-title').innerText;
+      const url = window.location.href;
+      
+      document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(blogTitle)}&url=${encodeURIComponent(url)}`;
+      document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(blogTitle)}`;
+    }
+  });
+
+  document.getElementById('copyLink').addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      sharePopup.style.display = 'none';
+      shareNotif.classList.add('show');
+      setTimeout(() => shareNotif.classList.remove('show'), 2000);
+    });
+  });
+
+  // Close share popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!sharePopup.contains(e.target) && e.target !== shareBtn) {
+      sharePopup.style.display = 'none';
+    }
+  });
+</script>
+</html>
