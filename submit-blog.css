@@ -1,5 +1,10 @@
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     color: #333;
@@ -11,6 +16,7 @@ body {
     padding: 20px;
 }
 
+/* Header Styles */
 .submit-header {
     display: flex;
     justify-content: space-between;
@@ -35,13 +41,17 @@ body {
     color: white;
     text-decoration: none;
     border-radius: 20px;
-    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .back-button:hover {
     background-color: #5a6268;
+    transform: scale(1.02);
 }
 
+/* Submit Section */
 .submit-section {
     background: white;
     padding: 30px;
@@ -49,14 +59,52 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.blog-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.hero-banner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.hero-banner p {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* Authentication Form */
+.auth-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    animation: fadeInUp 0.8s ease;
+}
+
+.auth-form h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    color: #ff6f61;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Form Group */
 .form-group {
     position: relative;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
@@ -74,19 +122,104 @@ body {
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: #ff6f61;
+    box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
     outline: none;
 }
 
 .form-group textarea {
     height: 150px;
     resize: vertical;
+}
+
+/* Password Toggle */
+.password-group {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 48px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: #ff6f61;
+}
+
+/* Error Message */
+.error-message {
+    color: #f87171;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    display: none;
+}
+
+/* Buttons */
+.auth-button,
+.submit-button,
+.logout-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #ff6f61 0%, #e65a50 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.auth-button:hover,
+.submit-button:hover,
+.logout-button:hover {
+    background: linear-gradient(135deg, #e65a50 0%, #d44a40 100%);
+    transform: scale(1.02);
+}
+
+.auth-button:active,
+.submit-button:active,
+.logout-button:active {
+    transform: scale(0.98);
+}
+
+/* Auth Switch */
+.auth-switch {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.auth-switch a {
+    color: #ff6f61;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.auth-switch a:hover {
+    color: #e65a50;
+}
+
+/* Blog Form */
+.blog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeInUp 0.8s ease;
 }
 
 .char-counter {
@@ -97,6 +230,7 @@ body {
     color: #7f8c8d;
 }
 
+/* Preview Section */
 .preview-section {
     margin-top: 20px;
     padding: 20px;
@@ -113,10 +247,24 @@ body {
 
 .preview-card {
     padding: 15px;
-    background: white;
-    border-left: 4px solid #ff6f61;
-    border-radius: 5px;
+    background: linear-gradient(to bottom right, #ffffff, #fdf1ee);
+    border-left: 6px solid #ff6f61;
+    border-radius: 12px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.preview-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.preview-thumbnail {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 .preview-card h4 {
@@ -133,27 +281,7 @@ body {
     margin: 0;
 }
 
-button {
-    padding: 12px;
-    background-color: #ff6f61;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-    background-color: #e65a50;
-    transform: scale(1.02);
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
+/* Submission Message */
 .submission-message {
     margin-top: 20px;
     text-align: center;
@@ -161,32 +289,50 @@ button:active {
     font-weight: 600;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .submit-header h1 {
-        font-size: 1.5rem;
-    }
-
-    .submit-section {
-        padding: 20px;
-    }
+/* Logout Button */
+.logout-button {
+    width: auto;
+    padding: 10px 20px;
+    margin-top: 10px;
 }
 
-/* Animate form fields on focus */
-input:focus, textarea:focus {
-    transition: all 0.3s ease;
-    box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+/* Terms and Conditions */
+.terms p {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.5;
 }
 
-/* Animate form load */
-.blog-form {
-    animation: fadeInUp 0.8s ease;
+.rule-text {
+    color: blueviolet;
+    text-decoration: underline;
+    font-weight: 600;
 }
 
+/* Hidden Class */
+.hidden {
+    display: none;
+}
+
+/* Loading Spinner */
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animations */
 @keyframes fadeInUp {
     from {
         transform: translateY(20px);
@@ -197,34 +343,8 @@ input:focus, textarea:focus {
         opacity: 1;
     }
 }
-.preview-card {
-    transition: all 0.3s ease;
-    border-left: 6px solid #ff6f61;
-    border-radius: 12px;
-    background: linear-gradient(to bottom right, #ffffff, #fdf1ee);
-}
 
-.preview-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-}
-.hero-banner {
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
-    padding: 40px;
-    text-align: center;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    color: #2c3e50;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.hero-banner h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-}
-
-/* Footer Section */
+/* Footer Styles */
 .footer-section {
     background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
     color: #2d3748;
@@ -242,7 +362,6 @@ input:focus, textarea:focus {
     align-items: start;
 }
 
-/* Footer Branding */
 .footer-brand {
     text-align: center;
 }
@@ -259,7 +378,6 @@ input:focus, textarea:focus {
     line-height: 1.5;
 }
 
-/* Footer Navigation */
 .footer-nav h4 {
     font-size: 1.25rem;
     font-weight: 600;
@@ -287,7 +405,6 @@ input:focus, textarea:focus {
     color: #3182ce;
 }
 
-/* Footer Contact */
 .footer-contact h4 {
     font-size: 1.25rem;
     font-weight: 600;
@@ -311,7 +428,6 @@ input:focus, textarea:focus {
     color: #2b6cb0;
 }
 
-/* Footer Bottom */
 .footer-bottom {
     text-align: center;
     margin-top: 2rem;
@@ -341,8 +457,29 @@ input:focus, textarea:focus {
     color: #2b6cb0;
 }
 
-/* Responsive Adjustments */
+/* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .submit-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .submit-section {
+        padding: 20px;
+    }
+
+    .hero-banner h1 {
+        font-size: 2rem;
+    }
+
+    .auth-container {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
     .footer-container {
         grid-template-columns: 1fr;
         text-align: center;
@@ -362,10 +499,4 @@ input:focus, textarea:focus {
         justify-content: center;
         gap: 1rem;
     }
-}
-.rule-text{
-    color: blueviolet;
-    font-style: underline;
-    font-weight: 600;
-    
 }

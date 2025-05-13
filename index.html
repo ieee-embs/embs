@@ -3,352 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IEEE EMBS RIT</title>
-    <link rel="icon" href="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>IEEE EMBS Notice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background: linear-gradient(90deg, #6d49cf, #d2d2d3, #5925eb);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        nav img {
+            height: 50px;
+            transition: transform 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+        nav img:hover {
+            transform: scale(1.1);
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .image-notice {
+            width: 300px;
+            height: 300px;
+            background: #e5e7eb;
+            border: 2px solid #d1d5db;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .image-notice:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .image-notice img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+        main h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        main p {
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 2px solid #334155;
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        footer p:hover {
+            color: #e2e8f0;
+            transition: color 0.3s ease;
+        }
+        @media (max-width: 768px) {
+            .image-notice {
+                width: 250px;
+                height: 250px;
+            }
+            main h1 {
+                font-size: 1.75rem;
+            }
+            main p {
+                font-size: 0.95rem;
+            }
+        }
+        #auth-prompt.hidden {
+            display: none;
+        }
+        #auth-prompt {
+            z-index: 1000;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        #auth-prompt .bg-white {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95);
+            animation: popUp 0.3s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes popUp {
+            from { transform: scale(0.95); }
+            to { transform: scale(1); }
+        }
+        .input-field {
+            transition: border-color 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #5925eb;
+            outline: none;
+        }
+        #auth-message {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+        #auth-message.show {
+            opacity: 1;
+            height: auto;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <img src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="Club Logo" class="logo-image">
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#team" class="nav-link">Team</a></li>
-                <li><a href="#events" class="nav-link">Events</a></li>
-                <li>
-                    <a href="blog.html" class="nav-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="trending-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                            <polyline points="17 6 23 6 23 12"></polyline>
-                        </svg>
-                        Blogs
-                    </a>
-                </li>
-                <li><a href="construction.html" class="nav-link">Join Us</a></li>
-            </ul>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    <nav class="bg-gray-800 w-full py-4 shadow-md">
+        <div class="container mx-auto flex items-center justify-center">
+            <img id="logo-trigger" src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="IEEE EMBS Logo" class="h-10">
         </div>
     </nav>
-
-    <div id="home" class="carousel">
-        <div class="carousel-slide active" style="background-image: url('IMG_20250329_092444339.jpg')">
-            <div class="carousel-content">
-                <h2>Welcome to <span style="background-color:#6B46C1;padding: 2px;border-radius: 10px;">IEEE EMBS RIT</span></h2>
-                <p>Join us in creating unforgettable memories and impactful experiences.</p>
-            </div>
+    <main class="flex-grow flex flex-col items-center justify-center p-6">
+        <div class="image-notice w-80 h-80 bg-gray-200 rounded-lg flex items-center justify-center mb-8">
+            <img src="image.jpg" alt="IEEE EMBS Logo" class="w-full h-full object-cover rounded-lg">
         </div>
-        <div class="carousel-slide" style="background-image: url('IMG_20250329_095320554.jpg')">
-            <div class="carousel-content">
-                <h2>Empowering Student Growth</h2>
-                <p>Discover opportunities to learn, lead, and inspire.</p>
-            </div>
-        </div>
-        <div class="carousel-slide" style="background-image: url('IMG_20250329_102752461.jpg')">
-            <div class="carousel-content">
-                <h2>Building a Vibrant Community</h2>
-                <p>Connect with passionate individuals and make a difference.</p>
-            </div>
-        </div>
-    </div>
-
-    <section id="about" class="about-section">
-        <div class="about-container">
-            <h2 class="about-title">About Us</h2>
-            <p class="about-description">
-                We're not just a bunch of engineers; we’re the future of medical tech, the masterminds behind innovations that could change lives (or at least make your projects look way cooler). Our mission? To help you decode the mysteries of biomedical engineering, solve problems like superheroes, and maybe even invent the next gadget that saves the world.
+        <div class="max-w-md text-center bg-white p-6 rounded-lg shadow-md">
+            <h1 class="text-2xl font-semibold text-gray-800 mb-4">IEEE EMBS Notice</h1>
+            <p class="text-gray-600 leading-relaxed">
+                Dear IEEE EMBS Members, we are deeply saddened to announce that, due to stringent compliance issues imposed by the IEEE Student Branch, we have been forced to temporarily shut down our website. We are doing everything in our power to address this and hope to be back online soon. Thank you for your understanding and support during this challenging time. <br>
+                <br> <span style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-weight: bold;"> Anoop A. Rao <br>
+                Chair, IEEE EMBS RIT </span>
             </p>
-            <div class="bento-grid">
-                <div class="bento-item bento-large">
-                    <div class="bento-icon">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#6B46C1;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#9F7AEA;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 22V12" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 7L12 12L22 7" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Our Mission</h3>
-                    <p>At the IEEE EMBS – Ramaiah Institute of Technology Student Chapter, we aim to unite engineering and life sciences by fostering innovation, learning, and collaboration. Through educational programs, research initiatives, and community engagement, we empower members to develop healthcare technologies that enhance lives..</p>
-                </div>
-                <div class="bento-item bento-stat">
-                    <div class="bento-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4 20V18C4 15.79 7.58 14 12 14C16.42 14 20 15.79 20 18V20" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3><span class="stat-ticker" data-target="40">0</span>+</h3>
-                    <p>Active Execoms</p>
-                </div>
-                <div class="bento-item bento-stat">
-                    <div class="bento-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 3V5H15V3" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 10H15" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3><span class="stat-ticker" data-target="20">0</span>+</h3>
-                    <p>Events Organized</p>
-                </div>
-                <div class="bento-item bento-small">
-                    <div class="bento-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#6B46C1;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#9F7AEA;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M6 4H18V6H20C21.1 6 22 6.9 22 8V10C22 12.21 20.21 14 18 14H17C17 16.21 15.21 18 13 18H11C8.79 18 7 16.21 7 14H6C3.79 14 2 12.21 2 10V8C2 6.9 2.9 6 4 6H6V4Z" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11 18V20H9C8.45 20 8 20.45 8 21H16C16 20.45 15.55 20 15 20H13V18" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 6V8" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18 6V8" stroke="url(#purpleGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3><span class="stat-ticker" data-target="7">0</span></h3>
-                    <p>Core Members</p>
-                </div>
-                <div class="bento-item bento-cta">
-                    <div class="bento-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5V19C21 20.1 20.1 21 19 21Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 8V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M8 12H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Join the Movement</h3>
-                    <p>Be part of our vibrant community today!</p>
-                    <button class="join-us-button"><a href="construction.html" style="color: black;">Get Involved</a></button>
-                </div>
-            </div>
         </div>
-    </section>
-
-    
-
-    <section id="join" class="join-section">
-        <!-- Join Us content -->
-    </section>
-
-    <section id="team" class="team-section">
-    <h2 class="team-title">Meet The Crew!</h2>
-    <p class="team-text">"Meet the dream team: the brains, the brawn, and the ones who bring snacks to meetings!"</p><br><br><br>
-    <div class="team-grid">
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="anoop.jpg" alt="John Doe" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">Anoop A. Rao</h3>
-                    <p class="team-role">EMBS Chair</p>
-                </div>
-            </div>
-        </div>
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="chandana.jpg" alt="Jane Smith" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">Chandana T</h3>
-                    <p class="team-role">EMBS Secretary</p>
-                </div>
-            </div>
-        </div>
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="Ritu Bhat_EMBS_1MS22MD030.jpg" alt="Alice Johnson" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">Ritu Bhat</h3>
-                    <p class="team-role">EMBS Treasurer</p>
-                </div>
-            </div>
-        </div>
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="amogh.jpg" alt="Bob Brown" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">Amogh Shastry</h3>
-                    <p class="team-role">Vice Chair</p>
-                </div>
-            </div>
-        </div>
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="Rishi Raj_EMBS_1MS23ET069.jpg" alt="Emily Davis" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">Rishi Raj</h3>
-                    <p class="team-role">Vice Secretary</p>
-                </div>
-            </div>
-        </div>
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="sujal.jpg" alt="Michael Lee" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">Sujal Sharma</h3>
-                    <p class="team-role">Vice Treasurer</p>
-                </div>
-            </div>
-        </div>
-        <div class="team-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="bhrg.webp" alt="Sophia Wilson" class="team-image">
-                </div>
-                <div class="card-back">
-                    <h3 class="team-name">J Nethru Bhargavi</h3>
-                    <p class="team-role">Technical Head</p>
-                </div>
-            </div>
+    </main>
+    <div id="auth-prompt" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2 class="text-xl font-semibold mb-4">Core Team Authentication</h2>
+            <input type="text" id="member-id" class="input-field border border-gray-300 rounded-lg p-2 w-full mb-4" placeholder="Enter Member ID">
+            <input type="password" id="password-input" class="input-field border border-gray-300 rounded-lg p-2 w-full mb-4" placeholder="Enter Password">
+            <button id="submit-auth" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
+            <button id="cancel-auth" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 mt-2">Cancel</button>
+            <p id="auth-message" class="text-sm mt-4"></p>
+            <p class="text-sm text-gray-500 mt-4">Having issues? <a href="mailto:ieeesujal@gmail.com" class="text-blue-500 hover:underline">Contact Admin</a></p>
         </div>
     </div>
-</section>
-<section id="events" class="events-section">
-    <h2 class="events-title">Upcoming Events</h2>
-    <div class="events-grid">
-        <div class="event-card">
-            <div class="event-date">
-                <span class="day">15</span>
-                <span class="month">May</span>
-            </div>
-            <div class="event-info">
-                <h3 class="event-name">Tech Symposium 2025</h3>
-                <p class="event-details">10:00 AM - 4:00 PM | Campus Auditorium</p>
-                <p class="event-description">Join us for a day of innovation, featuring keynote speakers, workshops, and networking opportunities.</p>
-                <button class="register-button">Register Now</button>
-            </div>
+    <footer class="bg-gray-800 w-full py-4">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>© 2025 IEEE EMBS RIT. All rights reserved.</p>
         </div>
-        <div class="event-card">
-            <div class="event-date">
-                <span class="day">22</span>
-                <span class="month">May</span>
-            </div>
-            <div class="event-info">
-                <h3 class="event-name">Hackathon Challenge</h3>
-                <p class="event-details">9:00 AM - 6:00 PM | Innovation Lab</p>
-                <p class="event-description">Compete in our annual hackathon to solve real-world problems and win exciting prizes.</p>
-                <button class="register-button">Register Now</button>
-            </div>
-        </div>
-        <div class="event-card">
-            <div class="event-date">
-                <span class="day">30</span>
-                <span class="month">May</span>
-            </div>
-            <div class="event-info">
-                <h3 class="event-name">Career Fair</h3>
-                <p class="event-details">11:00 AM - 3:00 PM | Main Hall</p>
-                <p class="event-description">Meet top employers, explore job opportunities, and kickstart your career.</p>
-                <button class="register-button">Register Now</button>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="blog-banner" class="blog-banner-section">
-    <div class="particle-container">
-        <!-- Particles -->
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-
-        <!-- Twinkling Stars -->
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-
-        <!-- Shooting Star -->
-        
-    </div>
-    <div class="blog-banner-content">
-        <h2 class="blog-banner-title">Explore the Universe of Blogs</h2>
-        <p class="blog-banner-text" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Powered by curiosity and circuits - Our IEEE EMBS Blog is Live! Where engineers spill thoughts,not chemicals : )</p>
-        <a href="blog.html" class="blog-banner-button">Explore EMBS Connect</a>
-    </div>
-</section>
-
-<footer class="footer-section">
-    <div class="footer-container">
-        <!-- Logo and Tagline -->
-        <div class="footer-brand">
-            <img src="https://www.embs.org/wp-content/uploads/2023/02/ieee-embs-notag-tm-logo2x.png" alt="IEEE EMBS RIT Logo" class="footer-logo">
-            
-            <p class="footer-tagline">Innovating Healthcare, Empowering Lives</p><br><br>
-            <img src="https://www.ramaiah-india.org/wp-content/uploads/2017/03/ramaiah-our-logo-logo.jpg" alt="IEEE EMBS RIT Logo" class="footer-logo">
-            <p class="footer-tagline">Ramaiah Institute of Technology <br> Bengaluru-560054</p>
-        </div>
-
-        <!-- Navigation Links -->
-        <div class="footer-nav">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="blog.html">Blogs</a></li>
-                <li><a href="construction.html">Join Us</a></li>
-            </ul>
-        </div>
-
-        <!-- Contact Information -->
-        <div class="footer-contact">
-            <h4>Contact Us</h4>
-            <p>Email: <a href="mailto:ieeesujal@gmail.com">ieeesujal@gmail.com</a></p>
-            <p>Address: Ramaiah Institute of Technology, Bengaluru, India</p>
-            
-        </div>
-
-        <!-- Newsletter Signup -->
-        
-    </div>
-
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-        <p class="footer-text">© 2025 IEEE EMBS RIT. All rights reserved.</p>
-        <p class="developer-credits">Developed by <a href="https://github.com/code-sujal" target="_blank">Sujal Sharma</a></p>
-    </div>
-
-    <!-- Subtle Background Particles -->
-    <div class="footer-particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-</footer>
-
-    <script src="script.js"></script>
+    </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const authPrompt = document.getElementById('auth-prompt');
+        const memberIdInput = document.getElementById('member-id');
+        const passwordInput = document.getElementById('password-input');
+        const submitAuth = document.getElementById('submit-auth');
+        const cancelAuth = document.getElementById('cancel-auth');
+        const authMessage = document.getElementById('auth-message');
+        const logoTrigger = document.getElementById('logo-trigger');
+        const showMessage = (message, isSuccess) => {
+            authMessage.textContent = message;
+            authMessage.className = `text-sm mt-4 ${isSuccess ? 'text-green-600' : 'text-red-600'}`;
+            authMessage.classList.add('show');
+        };
+        const e1 = "RU1CUzAwMQ==";
+        const e2 = "RU1CUzAwMg==";
+        const e3 = "RU1CUzAwMw==";
+        const ep = "ZW1ic3dlYnNpdGU=";
+        const validEntries = [e1, e2, e3];
+        const transformInput = (input) => {
+            return btoa(input);
+        };
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'e') {
+                e.preventDefault();
+                authPrompt.classList.remove('hidden');
+            }
+        });
+        let pressTimer;
+        let tapCount = 0;
+        let lastTap = 0;
+        const longPressDuration = 2000;
+        const tapDelay = 300;
+        logoTrigger.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            pressTimer = setTimeout(() => {
+                authPrompt.classList.remove('hidden');
+            }, longPressDuration);
+        });
+        logoTrigger.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            clearTimeout(pressTimer);
+        });
+        logoTrigger.addEventListener('touchcancel', () => {
+            clearTimeout(pressTimer);
+        });
+        logoTrigger.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            const currentTime = new Date().getTime();
+            const tapGap = currentTime - lastTap;
+            if (tapGap < tapDelay && tapGap > 0) {
+                tapCount++;
+                if (tapCount === 2) {
+                    authPrompt.classList.remove('hidden');
+                    tapCount = 0;
+                }
+            } else {
+                tapCount = 0;
+            }
+            lastTap = currentTime;
+        });
+        submitAuth.addEventListener('click', () => {
+            const memberId = memberIdInput.value.trim();
+            const password = passwordInput.value;
+            const transformedId = transformInput(memberId);
+            const transformedPassword = transformInput(password);
+            if (validEntries.includes(transformedId) && transformedPassword === ep) {
+                showMessage('Authentication successful! Accessing core team portal...', true);
+                setTimeout(() => {
+                    window.location.href = 'index2.html';
+                }, 1500);
+            } else {
+                showMessage('Invalid Member ID or Password!', false);
+            }
+        });
+        cancelAuth.addEventListener('click', () => {
+            authPrompt.classList.add('hidden');
+            memberIdInput.value = '';
+            passwordInput.value = '';
+            authMessage.classList.remove('show');
+            authMessage.textContent = '';
+        });
+    });
+    </script>
 </body>
 </html>
